@@ -1,0 +1,66 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage{graphicx}
+\graphicspath{ {Diagrams/} }
+
+\title{Distributed Systems project specification}
+
+\author{Péter Zavaczki\\30433}
+
+\begin{document}
+
+\maketitle
+
+\chapter{Description}
+The project aims to be a webapp for a public transit company, its possible users being the employees of the company or the customers of the company.
+It serves as a platform to see the route of the lines of transit put in circulation by the company, aswell as a shop platform for buying tickets or passes.
+
+\section{Functional requirements}
+The application differentiates three user types: regular users, verified users and admins (or power users), differentiated by the isAdmin field in the \textit{user} table in the database, which is 0 for verified users and 1 for admins.
+Regular users refer to the users which do not have an account, and only use the publicly available part of the app.
+The verified and power users need an email address and a password to log in.
+
+\begin{itemize}
+    \item Regular users can see data about the bus lines and the prices of the tickets and the passes.
+    \item Beside the regular users' functionalities, verified users can buy tickets or passes for their accounts.
+    During purchase, the users will have a "shopping cart".
+    We can think of these tickets as single rides on any line and the passes as unlimited rides for a certain amount of time (ex. a month after purchase).
+    This information is stored in the users' accounts.
+    Additionally, when a purchased pass nears its expiration date, an email can be sent to the user's email address notifying him/her of this fact.
+    \item Power users can access the CRUD functionalities on any table from the database.
+\end{itemize}
+
+\section{Non-functional requirements}
+\begin{itemize}
+    \item The application will be written using the Java programming language.
+    \item The backend will use ORM and the Spring framework for building a RESTful app.
+    \item For the frontend part, Angular JS pages will be used, which use the REST services of the backend.
+    \item The application will be layered, being split into the data access layer, the business layer and the presentation layer.
+    \item The data will be stored in a MySQL database containing tables for users, purchasable items, users' items and buses' routes.
+\end{itemize}
+
+
+\chapter{Use-cases}
+\section{Viewing a bus line's route}
+\begin{itemize}
+    \item Actor: Any user
+    \item Scenario:
+    \begin{itemize}
+        \item The user clicks on the \textit{lines} button
+        \item The user clicks on the button which has the wanted line's number
+    \end{itemize}
+\end{itemize}
+
+\section{Purchasing items}
+\begin{itemize}
+    \item Actor: Verified user
+    \item Scenario:
+    \begin{itemize}
+        \item The user logs into a verified user account
+        \item The user clicks on the \textit{topup} button
+        \item The user selects the item he wants to purchase and adds it to his cart
+        \item The user clicks on the \textit{cart} button
+        \item The user clicks the \textit{checkout} button
+    \end{itemize}
+\end{itemize}
+
+\end{document}
