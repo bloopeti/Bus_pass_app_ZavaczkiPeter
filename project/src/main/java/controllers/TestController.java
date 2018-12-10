@@ -31,4 +31,9 @@ public class TestController {
     public TestEntity getttt(@RequestParam(value = "fild") String s) {
         return testBll.finddd(s);
     }
+
+    @GetMapping(value = "/caca/{id}")
+    public TestEntity reqPartEx(@PathVariable("id") int id) {
+        return testRepo.findById(id).get();
+    }
 }
