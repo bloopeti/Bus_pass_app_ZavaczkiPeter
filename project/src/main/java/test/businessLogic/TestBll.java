@@ -1,9 +1,9 @@
-package bll;
+package test.businessLogic;
 
-import entity.TestEntity;
+import test.entity.TestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repos.TestRepo;
+import test.repos.TestRepo;
 
 @Service
 public class TestBll {

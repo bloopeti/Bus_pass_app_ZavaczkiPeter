@@ -1,10 +1,10 @@
-package controllers;
+package test.controller;
 
-import bll.TestBll;
-import entity.TestEntity;
+import test.businessLogic.TestBll;
+import test.entity.TestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import repos.TestRepo;
+import test.repos.TestRepo;
 
 import java.util.List;
 

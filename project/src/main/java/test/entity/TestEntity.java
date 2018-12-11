@@ -1,4 +1,4 @@
-package entity;
+package test.entity;
 
 import javax.persistence.*;
 
@@ -9,7 +9,7 @@ public class TestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column
-    String field;
+    private String field;
 
     public int getId() {
         return id;

@@ -1,6 +1,6 @@
-package repos;
+package test.repos;
 
-import entity.TestEntity;
+import test.entity.TestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
