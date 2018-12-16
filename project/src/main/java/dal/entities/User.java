@@ -17,6 +17,8 @@ public class User {
     private int isAdmin;
     @OneToMany(mappedBy = "user")
     private List<PurchasedPass> purchasedPasses;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private Cart cart;
 
     public int getId() {
         return id;
@@ -48,5 +50,13 @@ public class User {
 
     public void setIsAdmin(int isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public List<PurchasedPass> getPurchasedPasses() {
+        return purchasedPasses;
+    }
+
+    public void setPurchasedPasses(List<PurchasedPass> purchasedPasses) {
+        this.purchasedPasses = purchasedPasses;
     }
 }

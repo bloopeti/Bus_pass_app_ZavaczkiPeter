@@ -1,4 +1,4 @@
-package bll;
+package bll.crud;
 
 import dal.entities.Pass;
 import org.springframework.beans.factory.annotation.Autowired;

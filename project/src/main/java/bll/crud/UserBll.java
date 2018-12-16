@@ -1,5 +1,7 @@
-package bll;
+package bll.crud;
 
+import bll.PassExpirationNotifier;
+import bll.mailing.Mailer;
 import dal.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,13 @@ public class UserBll {
     public User getUserById(int id) {
         if (userRepository.findById(id).isPresent())
             return userRepository.findById(id).get();
+        else
+            return null;
+    }
+
+    public User getUserByEmailAddress(User user) {
+        if (userRepository.findByEmailAddress(user.getEmailAddress()).isPresent())
+            return userRepository.findByEmailAddress(user.getEmailAddress()).get();
         else
             return null;
     }

@@ -3,7 +3,7 @@ package dal.controllers;
 import dal.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import bll.UserBll;
+import bll.crud.UserBll;
 
 import java.util.List;
 

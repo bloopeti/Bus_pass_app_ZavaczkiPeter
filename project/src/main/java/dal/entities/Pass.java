@@ -1,6 +1,7 @@
 package dal.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -12,6 +13,8 @@ public class Pass {
     private String type;
     @Column
     private int price;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "passes")
+    private List<Cart> carts;
 
     public int getId() {
         return id;
