@@ -1,6 +1,7 @@
 package dal.controllers;
 
 import dal.entities.Cart;
+import dal.entities.IdWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import bll.crud.CartBll;
@@ -34,7 +35,12 @@ public class CartController {
     }
 
     @PostMapping(value = "/delete")
-    public void deleteCart(@RequestBody int cartId) {
-        cartBll.deleteCart(cartId);
+    public void deleteCart(@RequestBody IdWrapper idWrapper) {
+        cartBll.deleteCart(idWrapper.getId());
+    }
+
+    @PostMapping(value = "/addToCart")
+    private void addToCart(@RequestBody Cart cart) {
+        cartBll.addItemToCart(cart);
     }
 }

@@ -52,4 +52,17 @@ public class UserBll {
     public void deleteUser(int userId) {
         userRepository.deleteById(userId);
     }
+
+    public int login(User user) {
+        User dbUser = getUserByEmailAddress(user);
+        if (!(dbUser == null))
+            if (user.getPassword().equals(dbUser.getPassword()))
+                return dbUser.getIsAdmin();
+        return -10;
+    }
+    public void notifyAllUsers() {
+        PassExpirationNotifier passExpirationNotifier = new PassExpirationNotifier(new Mailer("peter.zavaczki.tucn@gmail.com", "P4$$word"));
+        List<User> users = getAllUsers();
+        passExpirationNotifier.notifyList(users);
+    }
 }

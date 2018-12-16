@@ -1,6 +1,7 @@
 package bll.crud;
 
 import dal.entities.Cart;
+import dal.entities.Pass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dal.repositories.CartRepository;
@@ -41,5 +42,22 @@ public class CartBll {
 
     public void deleteCart(int cartId) {
         cartRepository.deleteById(cartId);
+    }
+
+    // the cart parameter should only contain the ID of the cart and one single element in the list of the passes, which should be added
+    public String addItemToCart(Cart cart) {
+        Cart dbCart = getCartById(cart.getId());
+        PassBll passBll = new PassBll();
+        Pass pass = passBll.getPassById(cart.getPasses().get(0).getId());
+        dbCart.getPasses().add(pass);
+        return updateCart(dbCart);
+    }
+
+    // the cart parameter should only contain the ID of the cart
+    // and one single element in the list of the passes, which should be added
+    public String removeItemFromCart(Cart cart) {
+        Cart dbCart = getCartById(cart.getId());
+        dbCart.getPasses().add(cart.getPasses().get(0));
+        return updateCart(dbCart);
     }
 }

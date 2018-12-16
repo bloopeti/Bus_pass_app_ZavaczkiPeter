@@ -1,6 +1,7 @@
 package dal.controllers;
 
 import bll.crud.BusBll;
+import dal.entities.IdWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import dal.entities.Bus;
@@ -19,8 +20,8 @@ public class BusController {
     }
 
     @GetMapping(value = "/get/{id}")
-    public Bus getBusById(@PathVariable("id") int id) {
-        return busBll.getBusById(id);
+    public Bus getBusById(@PathVariable("id") IdWrapper id) {
+        return busBll.getBusById(id.getId());
     }
 
     @PostMapping(value = "/add")
@@ -34,7 +35,7 @@ public class BusController {
     }
 
     @PostMapping(value = "/delete")
-    public void deleteBus(@RequestBody int busId) {
-        busBll.deleteBus(busId);
+    public void deleteBus(@RequestBody IdWrapper idWrapper) {
+        busBll.deleteBus(idWrapper.getId());
     }
 }

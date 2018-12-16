@@ -1,5 +1,6 @@
 package dal.controllers;
 
+import dal.entities.IdWrapper;
 import dal.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,12 @@ public class UserController {
     }
 
     @PostMapping(value = "/delete")
-    public void deleteUser(@RequestBody int userId) {
-        userBll.deleteUser(userId);
+    public void deleteUser(@RequestBody IdWrapper idWrapper) {
+        userBll.deleteUser(idWrapper.getId());
+    }
+
+    @PostMapping(value = "/login")
+    public void login(@RequestBody User user) {
+        userBll.login(user);
     }
 }
