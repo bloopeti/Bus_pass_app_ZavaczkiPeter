@@ -1,7 +1,7 @@
-package dal.controllers;
+package bll.controllers;
 
 import bll.crud.PassBll;
-import dal.entities.IdWrapper;
+import bll.wrappers.IdWrapper;
 import dal.entities.Pass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,20 +1,9 @@
-package dal.entities;
+package bll.dtos;
 
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
-@Table
-public class Pass {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PassDTO {
     private int id;
-    @Column
     private String type;
-    @Column
     private int price;
-    @ManyToMany(mappedBy = "passes")//(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "passes")
-    private List<Cart> carts;
 
     public int getId() {
         return id;

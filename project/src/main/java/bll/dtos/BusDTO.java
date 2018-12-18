@@ -1,16 +1,8 @@
-package dal.entities;
+package bll.dtos;
 
-import javax.persistence.*;
-
-@Entity
-@Table
-public class Bus {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column
+public class BusDTO {
+    int id;
     private String line;
-    @Column
     private String route;
 
     public int getId() {

@@ -1,5 +1,8 @@
 package bll.crud;
 
+import dal.entities.Pass;
+import dal.entities.User;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dal.entities.PurchasedPass;
@@ -11,6 +14,10 @@ import java.util.List;
 public class PurchasedPassBll {
     @Autowired
     PurchasedPassRepository purchasedPassRepository;
+    @Autowired
+    PassBll passBll;
+    @Autowired
+    UserBll userBll;
 
     public List<PurchasedPass> getAllPurchasedPasses() {
         return purchasedPassRepository.findAll();
@@ -23,24 +30,52 @@ public class PurchasedPassBll {
             return null;
     }
 
-    public void addPurchasedPass(PurchasedPass purchasedPass) {
-        purchasedPassRepository.save(purchasedPass);
+    public String addPurchasedPass(PurchasedPass purchasedPass) {
+        String reason = "Pass";
+        Pass dbPass = passBll.getPassById(purchasedPass.getPass().getId());
+        if (dbPass != null) {
+            reason = "User";
+            User dbUser = userBll.getUserById(purchasedPass.getUser().getId());
+            if (dbUser != null) {
+                purchasedPassRepository.save(purchasedPass);
+                return "PurchasedPass ADD SUCCESSFUL";
+            }
+        }
+        return "PurchasedPass ADD FAILED: " + reason + " with this ID doesn't exist";
     }
 
     public String updatePurchasedPass(PurchasedPass purchasedPass) {
         PurchasedPass updatedPurchasedPass;
+
+        String reason = "PurchasedPass";
         if (purchasedPassRepository.findById(purchasedPass.getId()).isPresent()) {
             updatedPurchasedPass = purchasedPassRepository.findById(purchasedPass.getId()).get();
             updatedPurchasedPass.setExpirationDate(purchasedPass.getExpirationDate());
-            updatedPurchasedPass.setPass(purchasedPass.getPass());
-            updatedPurchasedPass.setUser(purchasedPass.getUser());
-            purchasedPassRepository.save(updatedPurchasedPass);
-            return "PurchasedPass UPDATE SUCCESSFUL";
-        } else
-            return "PurchasedPass UPDATE FAILED";
+
+            reason = "Pass";
+            Pass dbPass = passBll.getPassById(purchasedPass.getPass().getId());
+            if (dbPass != null) {
+                updatedPurchasedPass.setPass(dbPass);
+
+                reason = "User";
+                User dbUser = userBll.getUserById(purchasedPass.getUser().getId());
+                if (dbUser != null) {
+                    updatedPurchasedPass.setUser(dbUser);
+                    purchasedPassRepository.save(updatedPurchasedPass);
+                    updatedPurchasedPass.setUser(purchasedPass.getUser());
+                    return "PurchasedPass UPDATE SUCCESSFUL";
+                }
+            }
+        }
+        return "PurchasedPass UPDATE FAILED: " + reason + " with this ID doesn't exist";
     }
 
-    public void deletePurchasedPass(int purchasedPassId) {
-        purchasedPassRepository.deleteById(purchasedPassId);
+    public String deletePurchasedPass(int purchasedPassId) {
+        String reason = "PurchasedPass";
+        if (purchasedPassRepository.findById(purchasedPassId).isPresent()) {
+            purchasedPassRepository.deleteById(purchasedPassId);
+            return "PurchasedPass DELETE SUCCESSFUL";
+        }
+        return "PurchasedPass DELETE FAILED: " + reason + " with this ID doesn't exist";
     }
 }

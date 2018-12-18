@@ -1,24 +1,14 @@
-package dal.entities;
+package bll.dtos;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
     private int id;
-    @Column
     private String emailAddress;
-    @Column
     private String password;
-    @Column
     private int isAdmin;
-    @OneToMany(mappedBy = "user")//(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<PurchasedPass> purchasedPasses;
-    @OneToOne(mappedBy = "user")//(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private Cart cart;
+    private List<PurchasedPassDTO> purchasedPasses;
+    private CartDTO cart;
 
     public int getId() {
         return id;
@@ -52,19 +42,19 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public List<PurchasedPass> getPurchasedPasses() {
+    public List<PurchasedPassDTO> getPurchasedPasses() {
         return purchasedPasses;
     }
 
-    public void setPurchasedPasses(List<PurchasedPass> purchasedPasses) {
+    public void setPurchasedPasses(List<PurchasedPassDTO> purchasedPasses) {
         this.purchasedPasses = purchasedPasses;
     }
 
-    public Cart getCart() {
+    public CartDTO getCart() {
         return cart;
     }
 
-    public void setCart(Cart cart) {
+    public void setCart(CartDTO cart) {
         this.cart = cart;
     }
 }

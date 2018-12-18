@@ -1,6 +1,6 @@
-package dal.controllers;
+package bll.controllers;
 
-import dal.entities.IdWrapper;
+import bll.wrappers.IdWrapper;
 import dal.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public void login(@RequestBody User user) {
-        userBll.login(user);
+    public int login(@RequestBody User user) {
+        return userBll.login(user);
     }
 }

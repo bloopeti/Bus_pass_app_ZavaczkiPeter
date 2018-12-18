@@ -1,4 +1,4 @@
-package dal.entities;
+package bll.wrappers;
 
 public class IdWrapper {
     private int id;

@@ -7,13 +7,13 @@ import javax.persistence.*;
 public class PurchasedPass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     @Column
     private String expirationDate;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne//(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(referencedColumnName = "id")
     private Pass pass;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne//(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(referencedColumnName = "id")
     private User user;
 

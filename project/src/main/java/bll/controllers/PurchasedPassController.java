@@ -1,6 +1,6 @@
-package dal.controllers;
+package bll.controllers;
 
-import dal.entities.IdWrapper;
+import bll.wrappers.IdWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import bll.crud.PurchasedPassBll;
@@ -25,8 +25,8 @@ public class PurchasedPassController {
     }
 
     @PostMapping(value = "/add")
-    public void addPurchasedPass(@RequestBody PurchasedPass purchasedPass) {
-        purchasedPassBll.addPurchasedPass(purchasedPass);
+    public String addPurchasedPass(@RequestBody PurchasedPass purchasedPass) {
+        return purchasedPassBll.addPurchasedPass(purchasedPass);
     }
 
     @PostMapping(value = "/update")
@@ -35,7 +35,7 @@ public class PurchasedPassController {
     }
 
     @PostMapping(value = "/delete")
-    public void deletePurchasedPass(@RequestBody IdWrapper idWrapper) {
-        purchasedPassBll.deletePurchasedPass(idWrapper.getId());
+    public String deletePurchasedPass(@RequestBody IdWrapper idWrapper) {
+        return purchasedPassBll.deletePurchasedPass(idWrapper.getId());
     }
 }
