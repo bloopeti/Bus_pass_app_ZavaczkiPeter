@@ -103,9 +103,8 @@ public class UserBll {
                         PurchasedPassDTO purchasedPassDTO = new PurchasedPassDTO();
                         purchasedPassDTO.setUserId(dbUser.getId());
                         purchasedPassDTO.setPass(passDTO);
-//                        Timestamp now = new Timestamp(System.currentTimeMillis());
-//                        purchasedPassDTO.setExpirationDate(Integer.toString(now.getNanos()/1000));
-                        purchasedPassDTO.setExpirationDate(Long.toString(System.currentTimeMillis()));
+                        long thirtyOneDaysMillis = Long.parseLong("2678400000"); // one month
+                        purchasedPassDTO.setExpirationDate(Long.toString(System.currentTimeMillis() + thirtyOneDaysMillis));
                         dbUser.getPurchasedPasses().add(purchasedPassDTO);
                         purchasedPassBll.addPurchasedPass(purchasedPassDTO);
                     }
