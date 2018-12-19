@@ -1,20 +1,29 @@
 package bll.crud;
 
 import bll.PassExpirationNotifier;
+import bll.dtos.CartDTO;
+import bll.dtos.PassDTO;
+import bll.dtos.PurchasedPassDTO;
 import bll.dtos.UserDTO;
 import bll.dtos.converters.UserConverter;
 import bll.mailing.Mailer;
 import dal.entities.User;
+import dal.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import dal.repositories.UserRepository;
 
+import javax.validation.ReportAsSingleViolation;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 public class UserBll {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CartBll cartBll;
+    @Autowired
+    PurchasedPassBll purchasedPassBll;
     @Autowired
     private UserConverter converter;// = new UserConverter();
 
@@ -72,9 +81,46 @@ public class UserBll {
                 return dbUser.getIsAdmin();
         return -10;
     }
+
     public void notifyAllUsers() {
         PassExpirationNotifier passExpirationNotifier = new PassExpirationNotifier(new Mailer("peter.zavaczki.tucn@gmail.com", "P4$$word"));
         List<UserDTO> users = getAllUsers();
         passExpirationNotifier.notifyList(users);
+    }
+
+    // Just an ID in the user field is necessary, every pass it has in its cart (if it exists) will be bought
+    public String buyPassesInCart(UserDTO user) {
+        String reason = "User doesn't exist";
+        UserDTO dbUser = getUserById(user.getId());
+        if (!(dbUser == null)) {
+            reason = "Cart doesn't exist";
+            CartDTO cart = dbUser.getCart();
+            if (!(cart == null)) {
+                List<PassDTO> passList = cart.getPasses();
+                reason = "The cart is empty";
+                if (!passList.isEmpty()) {
+                    for (PassDTO passDTO : passList) {
+                        PurchasedPassDTO purchasedPassDTO = new PurchasedPassDTO();
+                        purchasedPassDTO.setUserId(dbUser.getId());
+                        purchasedPassDTO.setPass(passDTO);
+//                        Timestamp now = new Timestamp(System.currentTimeMillis());
+//                        purchasedPassDTO.setExpirationDate(Integer.toString(now.getNanos()/1000));
+                        purchasedPassDTO.setExpirationDate(Long.toString(System.currentTimeMillis()));
+                        dbUser.getPurchasedPasses().add(purchasedPassDTO);
+                        purchasedPassBll.addPurchasedPass(purchasedPassDTO);
+                    }
+                }
+                cart.getPasses().clear();
+                reason = cartBll.updateCart(cart);
+                if (reason.contains("SUCCESSFUL")) {
+                    reason = updateUser(dbUser);
+                    if (reason.contains("SUCCESSFUL")) {
+                        return "PASSES PURCHASED SUCCESSFULLY FOR THIS USER";
+                    }
+                }
+            }
+        }
+
+        return "PASS PURCHASE FAILED: " + reason;
     }
 }

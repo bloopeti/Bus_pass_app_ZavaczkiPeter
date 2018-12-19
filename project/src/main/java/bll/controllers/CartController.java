@@ -43,4 +43,9 @@ public class CartController {
     private String addToCart(@RequestBody CartDTO cart) {
         return cartBll.addItemToCart(cart);
     }
+
+    @PostMapping(value = "/removeFromCart")
+    private String removeFromCart(@RequestBody CartDTO cart) {
+        return cartBll.removeItemFromCart(cart);
+    }
 }

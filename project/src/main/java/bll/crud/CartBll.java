@@ -138,7 +138,7 @@ public class CartBll {
     }
 
     // the cart parameter should only contain the ID of the cart
-    // and one single element in the list of the passes, which should be added
+    // and one single element in the list of the passes, which should be removed
     public String removeItemFromCart(CartDTO cart) {
         CartDTO dbCart = getCartById(cart.getId());
         String reason = "Invalid Cart ID";
@@ -149,10 +149,19 @@ public class CartBll {
                 pass = passBll.getPassById(cart.getPasses().get(0).getId());
                 reason = "Pass with this ID doesn't exist";
                 if (pass != null) {
-                    dbCart.getPasses().remove(pass);
-                    reason = updateCart(dbCart);
-                    if (reason.contains("SUCCESSFUL")) {
-                        return "ITEM REMOVAL FROM CART SUCCESSFUL";
+                    reason = "Pass doesn't exist in this cart";
+                    List<PassDTO> passesInCart = dbCart.getPasses();
+                    int indexToRemove = -1;
+                    for (PassDTO passDTO : passesInCart){
+                        if (passDTO.getId() == cart.getPasses().get(0).getId());
+                            indexToRemove = passesInCart.indexOf(passDTO);
+                    }
+                    if (indexToRemove != -1) {
+                        dbCart.getPasses().remove(indexToRemove);
+                        reason = updateCart(dbCart);
+                        if (reason.contains("SUCCESSFUL")) {
+                            return "ITEM REMOVAL FROM CART SUCCESSFUL";
+                        }
                     }
                 }
             }

@@ -43,4 +43,14 @@ public class UserController {
     public int login(@RequestBody UserDTO user) {
         return userBll.login(user);
     }
+
+    @PostMapping(value = "/notifyAll")
+    public void notifyAllUsers() {
+        userBll.notifyAllUsers();
+    }
+
+    @PostMapping(value = "/buyPassesInCart")
+    public String buyPassesInCart(@RequestBody UserDTO userDTO) {
+        return userBll.buyPassesInCart(userDTO);
+    }
 }
