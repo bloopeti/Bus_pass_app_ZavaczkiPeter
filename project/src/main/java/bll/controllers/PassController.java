@@ -1,6 +1,7 @@
 package bll.controllers;
 
 import bll.crud.PassBll;
+import bll.dtos.PassDTO;
 import bll.wrappers.IdWrapper;
 import dal.entities.Pass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +16,27 @@ public class PassController {
     PassBll passBll;
 
     @GetMapping(value = "/getAll")
-    public List<Pass> getAllPasses() {
+    public List<PassDTO> getAllPasses() {
         return passBll.getAllPasses();
     }
 
     @GetMapping(value = "/get/{id}")
-    public Pass getPassById(@PathVariable("id") int id) {
+    public PassDTO getPassById(@PathVariable("id") int id) {
         return passBll.getPassById(id);
     }
 
     @PostMapping(value = "/add")
-    public void addPass(@RequestBody Pass pass) {
-        passBll.addPass(pass);
+    public String addPass(@RequestBody PassDTO pass) {
+        return passBll.addPass(pass);
     }
 
     @PostMapping(value = "/update")
-    public String updatePass(@RequestBody Pass pass) {
+    public String updatePass(@RequestBody PassDTO pass) {
         return passBll.updatePass(pass);
     }
 
     @PostMapping(value = "/delete")
-    public void deletePass(@RequestBody IdWrapper idWrapper) {
-        passBll.deletePass(idWrapper.getId());
+    public String deletePass(@RequestBody IdWrapper idWrapper) {
+        return passBll.deletePass(idWrapper.getId());
     }
 }

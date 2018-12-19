@@ -1,6 +1,7 @@
 package bll.controllers;
 
 import bll.crud.BusBll;
+import bll.dtos.BusDTO;
 import bll.wrappers.IdWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +16,27 @@ public class BusController {
     BusBll busBll;
 
     @GetMapping(value = "/getAll")
-    public List<Bus> getAllBuses() {
+    public List<BusDTO> getAllBuses() {
         return busBll.getAllBuses();
     }
 
     @GetMapping(value = "/get/{id}")
-    public Bus getBusById(@PathVariable("id") int id) {
+    public BusDTO getBusById(@PathVariable("id") int id) {
         return busBll.getBusById(id);
     }
 
     @PostMapping(value = "/add")
-    public void addBus(@RequestBody Bus bus) {
-        busBll.addBus(bus);
+    public String addBus(@RequestBody BusDTO bus) {
+        return busBll.addBus(bus);
     }
 
     @PostMapping(value = "/update")
-    public String updateBus(@RequestBody Bus bus) {
+    public String updateBus(@RequestBody BusDTO bus) {
         return busBll.updateBus(bus);
     }
 
     @PostMapping(value = "/delete")
-    public void deleteBus(@RequestBody IdWrapper idWrapper) {
-        busBll.deleteBus(idWrapper.getId());
+    public String deleteBus(@RequestBody IdWrapper idWrapper) {
+        return busBll.deleteBus(idWrapper.getId());
     }
 }

@@ -1,10 +1,10 @@
 package bll.controllers;
 
+import bll.crud.UserBll;
+import bll.dtos.UserDTO;
 import bll.wrappers.IdWrapper;
-import dal.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import bll.crud.UserBll;
 
 import java.util.List;
 
@@ -15,32 +15,32 @@ public class UserController {
     UserBll userBll;
 
     @GetMapping(value = "/getAll")
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return userBll.getAllUsers();
     }
 
     @GetMapping(value = "/get/{id}")
-    public User getUserById(@PathVariable("id") int id) {
+    public UserDTO getUserById(@PathVariable("id") int id) {
         return userBll.getUserById(id);
     }
 
     @PostMapping(value = "/add")
-    public void addUser(@RequestBody User user) {
-        userBll.addUser(user);
+    public String addUser(@RequestBody UserDTO user) {
+         return userBll.addUser(user);
     }
 
     @PostMapping(value = "/update")
-    public String updateUser(@RequestBody User user) {
+    public String updateUser(@RequestBody UserDTO user) {
         return userBll.updateUser(user);
     }
 
     @PostMapping(value = "/delete")
-    public void deleteUser(@RequestBody IdWrapper idWrapper) {
-        userBll.deleteUser(idWrapper.getId());
+    public String deleteUser(@RequestBody IdWrapper idWrapper) {
+        return userBll.deleteUser(idWrapper.getId());
     }
 
     @PostMapping(value = "/login")
-    public int login(@RequestBody User user) {
+    public int login(@RequestBody UserDTO user) {
         return userBll.login(user);
     }
 }

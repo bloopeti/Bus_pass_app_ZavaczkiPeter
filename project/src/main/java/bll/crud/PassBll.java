@@ -1,5 +1,7 @@
 package bll.crud;
 
+import bll.dtos.PassDTO;
+import bll.dtos.converters.PassConverter;
 import dal.entities.Pass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,35 +13,44 @@ import java.util.List;
 public class PassBll {
     @Autowired
     PassRepository passRepository;
+    @Autowired
+    private PassConverter converter;// = new PassConverter();
 
-    public List<Pass> getAllPasses() {
-        return passRepository.findAll();
+    public List<PassDTO> getAllPasses() {
+        return converter.entityListToDtoList(passRepository.findAll());
     }
 
-    public Pass getPassById(int id) {
+    public PassDTO getPassById(int id) {
         if (passRepository.findById(id).isPresent())
-            return passRepository.findById(id).get();
+            return converter.entityToDto(passRepository.findById(id).get());
         else
             return null;
     }
 
-    public void addPass(Pass pass) {
-        passRepository.save(pass);
+    public String addPass(PassDTO pass) {
+        passRepository.save(converter.dtoToEntity(pass));
+        return "PASS ADD SUCCESSFUL";
     }
 
-    public String updatePass(Pass pass) {
+    public String updatePass(PassDTO pass) {
         Pass updatedPass;
+        String reason = "Pass";
         if (passRepository.findById(pass.getId()).isPresent()) {
             updatedPass = passRepository.findById(pass.getId()).get();
             updatedPass.setType(pass.getType());
             updatedPass.setPrice(pass.getPrice());
             passRepository.save(updatedPass);
             return "PASS UPDATE SUCCESSFUL";
-        } else
-            return "PASS UPDATE FAILED";
+        }
+        return "PASS UPDATE FAILED: " + reason + " with this ID doesn't exist";
     }
 
-    public void deletePass(int passId) {
-        passRepository.deleteById(passId);
+    public String deletePass(int passId) {
+        String reason = "Pass";
+        if (passRepository.findById(passId).isPresent()) {
+            passRepository.deleteById(passId);
+            return "PASS DELETE SUCCESSFUL";
+        }
+        return "PASS DELETE FAILED: " + reason + " with this ID doesn't exist";
     }
 }

@@ -1,6 +1,7 @@
 package bll;
 
 import bll.crud.UserBll;
+import bll.dtos.UserDTO;
 import bll.mailing.Mailer;
 import dal.entities.User;
 
@@ -15,7 +16,7 @@ public class PassExpirationNotifier {
         passExpirationChecker = new PassExpirationChecker();
     }
 
-    public void notifyOneUser(User user) {
+    public void notifyOneUser(UserDTO user) {
         if (!(passExpirationChecker.checkExpiredPasses(user).isEmpty())) {
             String subject = "Buss pass expired!";
             String content = "Hello!\n\nOne ore more of your bus passes are expired.\nPlease consider buying another pass.";
@@ -23,8 +24,8 @@ public class PassExpirationNotifier {
         }
     }
 
-    public void notifyList(List<User> userList) {
-        for(User user : userList)
+    public void notifyList(List<UserDTO> userList) {
+        for(UserDTO user : userList)
             notifyOneUser(user);
     }
 

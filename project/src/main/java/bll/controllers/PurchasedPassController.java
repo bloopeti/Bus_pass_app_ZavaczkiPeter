@@ -1,5 +1,6 @@
 package bll.controllers;
 
+import bll.dtos.PurchasedPassDTO;
 import bll.wrappers.IdWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +16,22 @@ public class PurchasedPassController {
     PurchasedPassBll purchasedPassBll;
 
     @GetMapping(value = "/getAll")
-    public List<PurchasedPass> getAllPurchasedPasses() {
+    public List<PurchasedPassDTO> getAllPurchasedPasses() {
         return purchasedPassBll.getAllPurchasedPasses();
     }
 
     @GetMapping(value = "/get/{id}")
-    public PurchasedPass getPurchasedPassById(@PathVariable("id") int id) {
+    public PurchasedPassDTO getPurchasedPassById(@PathVariable("id") int id) {
         return purchasedPassBll.getPurchasedPassById(id);
     }
 
     @PostMapping(value = "/add")
-    public String addPurchasedPass(@RequestBody PurchasedPass purchasedPass) {
+    public String addPurchasedPass(@RequestBody PurchasedPassDTO purchasedPass) {
         return purchasedPassBll.addPurchasedPass(purchasedPass);
     }
 
     @PostMapping(value = "/update")
-    public String updatePurchasedPass(@RequestBody PurchasedPass purchasedPass) {
+    public String updatePurchasedPass(@RequestBody PurchasedPassDTO purchasedPass) {
         return purchasedPassBll.updatePurchasedPass(purchasedPass);
     }
 

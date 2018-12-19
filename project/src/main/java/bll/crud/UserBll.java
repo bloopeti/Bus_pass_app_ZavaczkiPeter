@@ -1,6 +1,8 @@
 package bll.crud;
 
 import bll.PassExpirationNotifier;
+import bll.dtos.UserDTO;
+import bll.dtos.converters.UserConverter;
 import bll.mailing.Mailer;
 import dal.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +15,35 @@ import java.util.List;
 public class UserBll {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private UserConverter converter;// = new UserConverter();
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return converter.entityListToDtoList(userRepository.findAll());
     }
 
-    public User getUserById(int id) {
+    public UserDTO getUserById(int id) {
         if (userRepository.findById(id).isPresent())
-            return userRepository.findById(id).get();
+            return converter.entityToDto(userRepository.findById(id).get());
         else
             return null;
     }
 
-    public User getUserByEmailAddress(User user) {
+    public UserDTO getUserByEmailAddress(UserDTO user) {
         if (userRepository.findByEmailAddress(user.getEmailAddress()).isPresent())
-            return userRepository.findByEmailAddress(user.getEmailAddress()).get();
+            return converter.entityToDto(userRepository.findByEmailAddress(user.getEmailAddress()).get());
         else
             return null;
     }
 
-    public void addUser(User user) {
-        userRepository.save(user);
+    public String addUser(UserDTO user) {
+        userRepository.save(converter.dtoToEntity(user));
+        return "USER ADD SUCCESSFUL";
     }
 
-    public String updateUser(User user) {
+    public String updateUser(UserDTO user) {
         User updatedUser;
+        String reason = "User";
         if (userRepository.findById(user.getId()).isPresent()) {
             updatedUser = userRepository.findById(user.getId()).get();
             updatedUser.setEmailAddress(user.getEmailAddress());
@@ -49,12 +55,18 @@ public class UserBll {
             return "USER UPDATE FAILED";
     }
 
-    public void deleteUser(int userId) {
-        userRepository.deleteById(userId);
+    public String deleteUser(int userId) {
+
+        String reason = "User";
+        if (userRepository.findById(userId).isPresent()) {
+            userRepository.deleteById(userId);
+            return "User DELETE SUCCESSFUL";
+        }
+        return "USER DELETE FAILED: " + reason + " with this ID doesn't exist";
     }
 
-    public int login(User user) {
-        User dbUser = getUserByEmailAddress(user);
+    public int login(UserDTO user) {
+        UserDTO dbUser = getUserByEmailAddress(user);
         if (!(dbUser == null))
             if (user.getPassword().equals(dbUser.getPassword()))
                 return dbUser.getIsAdmin();
@@ -62,7 +74,7 @@ public class UserBll {
     }
     public void notifyAllUsers() {
         PassExpirationNotifier passExpirationNotifier = new PassExpirationNotifier(new Mailer("peter.zavaczki.tucn@gmail.com", "P4$$word"));
-        List<User> users = getAllUsers();
+        List<UserDTO> users = getAllUsers();
         passExpirationNotifier.notifyList(users);
     }
 }

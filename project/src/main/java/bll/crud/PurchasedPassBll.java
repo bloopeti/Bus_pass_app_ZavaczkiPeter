@@ -1,5 +1,11 @@
 package bll.crud;
 
+import bll.dtos.PassDTO;
+import bll.dtos.PurchasedPassDTO;
+import bll.dtos.UserDTO;
+import bll.dtos.converters.PassConverter;
+import bll.dtos.converters.PurchasedPassConverter;
+import bll.dtos.converters.UserConverter;
 import dal.entities.Pass;
 import dal.entities.User;
 import net.bytebuddy.asm.Advice;
@@ -18,33 +24,39 @@ public class PurchasedPassBll {
     PassBll passBll;
     @Autowired
     UserBll userBll;
+    @Autowired
+    private PurchasedPassConverter converter;// = new PurchasedPassConverter();
+    @Autowired
+    private PassConverter passConverter;// = new PassConverter();
+    @Autowired
+    private UserConverter userConverter;// = new UserConverter();
 
-    public List<PurchasedPass> getAllPurchasedPasses() {
-        return purchasedPassRepository.findAll();
+    public List<PurchasedPassDTO> getAllPurchasedPasses() {
+        return converter.entityListToDtoList(purchasedPassRepository.findAll());
     }
 
-    public PurchasedPass getPurchasedPassById(int id) {
+    public PurchasedPassDTO getPurchasedPassById(int id) {
         if (purchasedPassRepository.findById(id).isPresent())
-            return purchasedPassRepository.findById(id).get();
+            return converter.entityToDto(purchasedPassRepository.findById(id).get());
         else
             return null;
     }
 
-    public String addPurchasedPass(PurchasedPass purchasedPass) {
+    public String addPurchasedPass(PurchasedPassDTO purchasedPass) {
         String reason = "Pass";
-        Pass dbPass = passBll.getPassById(purchasedPass.getPass().getId());
+        PassDTO dbPass = passBll.getPassById(purchasedPass.getPass().getId());
         if (dbPass != null) {
             reason = "User";
-            User dbUser = userBll.getUserById(purchasedPass.getUser().getId());
+            UserDTO dbUser = userBll.getUserById(purchasedPass.getUserId());
             if (dbUser != null) {
-                purchasedPassRepository.save(purchasedPass);
+                purchasedPassRepository.save(converter.dtoToEntity(purchasedPass));
                 return "PurchasedPass ADD SUCCESSFUL";
             }
         }
         return "PurchasedPass ADD FAILED: " + reason + " with this ID doesn't exist";
     }
 
-    public String updatePurchasedPass(PurchasedPass purchasedPass) {
+    public String updatePurchasedPass(PurchasedPassDTO purchasedPass) {
         PurchasedPass updatedPurchasedPass;
 
         String reason = "PurchasedPass";
@@ -53,16 +65,15 @@ public class PurchasedPassBll {
             updatedPurchasedPass.setExpirationDate(purchasedPass.getExpirationDate());
 
             reason = "Pass";
-            Pass dbPass = passBll.getPassById(purchasedPass.getPass().getId());
+            PassDTO dbPass = passBll.getPassById(purchasedPass.getPass().getId());
             if (dbPass != null) {
-                updatedPurchasedPass.setPass(dbPass);
+                updatedPurchasedPass.setPass(passConverter.dtoToEntity(dbPass));
 
                 reason = "User";
-                User dbUser = userBll.getUserById(purchasedPass.getUser().getId());
+                UserDTO dbUser = userBll.getUserById(purchasedPass.getUserId());
                 if (dbUser != null) {
-                    updatedPurchasedPass.setUser(dbUser);
+                    updatedPurchasedPass.setUser(userConverter.dtoToEntity(dbUser));
                     purchasedPassRepository.save(updatedPurchasedPass);
-                    updatedPurchasedPass.setUser(purchasedPass.getUser());
                     return "PurchasedPass UPDATE SUCCESSFUL";
                 }
             }
