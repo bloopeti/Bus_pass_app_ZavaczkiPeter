@@ -1,0 +1,6 @@
+<h2>The purchasable passes</h2>
+<ul>
+  <li *ngFor="let pass of passes">
+    <span class="badge">{{pass.type}} :</span> {{pass.price}} {{currencyCode}}
+  </li>
+</ul>

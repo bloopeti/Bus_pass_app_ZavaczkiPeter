@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     UserBll userBll;
@@ -42,6 +43,11 @@ public class UserController {
     @PostMapping(value = "/login")
     public int login(@RequestBody UserDTO user) {
         return userBll.login(user);
+    }
+
+    @PostMapping(value = "/register")
+    public String register(@RequestBody UserDTO user) {
+        return userBll.register(user);
     }
 
     @PostMapping(value = "/notifyAll")

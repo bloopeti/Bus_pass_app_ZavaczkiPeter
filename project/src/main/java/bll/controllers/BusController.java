@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/bus")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BusController {
     @Autowired
     BusBll busBll;

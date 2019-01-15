@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ReportAsSingleViolation;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -80,6 +81,23 @@ public class UserBll {
             if (user.getPassword().equals(dbUser.getPassword()))
                 return dbUser.getIsAdmin();
         return -10;
+    }
+
+    public String register(UserDTO user) {
+        UserDTO userToRegister = getUserByEmailAddress(user);
+        if (userToRegister == null) {
+            userToRegister = new UserDTO();
+            userToRegister.setIsAdmin(0);
+            userToRegister.setEmailAddress(user.getEmailAddress());
+            userToRegister.setPassword(user.getPassword());
+            addUser(user);
+            CartDTO usersCart = new CartDTO();
+            usersCart.setUserId(getUserByEmailAddress(user).getId());
+            usersCart.setPasses(new ArrayList<PassDTO>());
+            cartBll.addCart(usersCart);
+            return "USER REGISTER SUCCESSFUL";
+        }
+        return "USER REGISTER FAILED: THIS EMAIL ADDRESS ALREADY EXISTS";
     }
 
     public void notifyAllUsers() {

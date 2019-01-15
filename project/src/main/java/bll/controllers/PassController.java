@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/pass")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PassController {
     @Autowired
     PassBll passBll;
