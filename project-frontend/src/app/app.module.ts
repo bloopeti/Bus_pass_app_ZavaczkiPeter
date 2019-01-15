@@ -1,7 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {MatIconModule, MatMenuModule, MatToolbarModule, MatButtonModule, MatTableModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BusDetailsComponent} from './bus-details/bus-details.component';
 
 import {AppRoutingModule} from './app-routing.module';
 
@@ -19,13 +22,20 @@ import {ErrorComponent} from './error/error.component';
     BusesComponent,
     PassesComponent,
     LoginComponent,
-    ErrorComponent
+    ErrorComponent,
+    BusDetailsComponent
   ],
   imports: [
     BrowserModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

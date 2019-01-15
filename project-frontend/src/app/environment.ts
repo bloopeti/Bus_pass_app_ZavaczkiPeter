@@ -1,4 +1,4 @@
 export const environment = {
   isUserLoggedIn: false,
-  isUserAdmin: false
+  isUserAdmin: true
 }

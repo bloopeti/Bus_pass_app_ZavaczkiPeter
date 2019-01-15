@@ -1,0 +1,18 @@
+<div class="container">
+  <div>
+    <h2>Bus Details</h2>
+    <p>
+      <label>Line: </label>
+      <input #busLine *ngIf="env.isUserAdmin" [(ngModel)]="bus.line" placeholder="bus line"/>
+      <span  #notAdmin *ngIf="!env.isUserAdmin">{{bus.line}}</span>
+    </p>
+    <p>
+      <label>Route: </label>
+      <input #busRoute *ngIf="env.isUserAdmin" [(ngModel)]="bus.route" placeholder="bus route"/>
+      <span  #notAdmin *ngIf="!env.isUserAdmin">{{bus.route}}</span>
+    </p>
+    <button *ngIf="env.isUserAdmin" (click)="add()">Add</button>
+    <button *ngIf="env.isUserAdmin" (click)="update()">Update</button>
+    <button *ngIf="env.isUserAdmin" (click)="delete()">Delete</button>
+  </div>
+</div>
