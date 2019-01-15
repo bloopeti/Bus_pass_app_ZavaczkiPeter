@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   returnedUser = new User();
   isUserLogged: string;
   isUserAdmin: string;
+  loggedInUser: string;
   message: string;
 
   constructor(private loginService: LoginService) {
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.isUserLogged = localStorage.getItem('isUserLoggedIn');
-    this.isUserAdmin = localStorage.getItem('loggedInUser');
+    this.isUserAdmin = localStorage.getItem('isUserAdmin');
+    this.loggedInUser = localStorage.getItem('loggedInUser');
     this.message = '';
   }
 
@@ -41,7 +43,8 @@ export class LoginComponent implements OnInit {
         this.message = 'Wrong email or password!';
       }
       this.isUserLogged = localStorage.getItem('isUserLoggedIn');
-      this.isUserAdmin = localStorage.getItem('loggedInUser');
+      this.isUserAdmin = localStorage.getItem('isUserAdmin');
+      this.loggedInUser = localStorage.getItem('loggedInUser');
     });
   }
 

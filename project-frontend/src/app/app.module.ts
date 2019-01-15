@@ -16,7 +16,7 @@ import {BusesComponent} from './buses/buses.component';
 import {BusDetailsComponent} from './bus-details/bus-details.component';
 import {PassesComponent} from './passes/passes.component';
 import {PassDetailsComponent} from './pass-details/pass-details.component';
-import { PersonalCartComponent } from './personal-cart/personal-cart.component';
+import {PersonalCartComponent} from './personal-cart/personal-cart.component';
 
 @NgModule({
   declarations: [

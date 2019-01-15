@@ -16,6 +16,9 @@
   Notify users of expired passes:
   <button (click)="notifyUsersOfExpiredPasses()">Notify</button>
 </span>
+<span *ngIf="(isUserLogged === 'true') && !(isUserAdmin === 'true')">
+  See your <a routerLink="/mycart">cart</a>.
+</span>
 
 <app-buses></app-buses>
 <app-passes></app-passes>
