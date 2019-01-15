@@ -1,6 +1,41 @@
-<h2>The purchasable passes</h2>
-<ul>
-  <li *ngFor="let pass of passes">
-    <span class="badge">{{pass.type}} :</span> {{pass.price}} {{currencyCode}}
-  </li>
-</ul>
+<div class="container">
+  <h2> The active pass lines</h2>
+  <div *ngIf="passes.length == 0">
+    <div class="alert alert-info" role="alert">Loading...</div>
+  </div>
+
+  <div *ngIf="passes.length > 0">
+    <table mat-table [dataSource]="passes" class="mat-elevation-z8">
+
+      <!-- Line Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id</th>
+        <td mat-cell *matCellDef="let pass"> {{pass.id}}</td>
+      </ng-container>
+
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Type</th>
+        <td mat-cell *matCellDef="let pass"> {{pass.type}}</td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price</th>
+        <td mat-cell *matCellDef="let pass"> {{pass.price}} {{currencyCode}}</td>
+      </ng-container>
+
+      <!-- Details Column -->
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef> Details</th>
+        <td mat-cell *matCellDef="let pass">
+          <button mat-raised-button (click)="viewDetails(pass.id)">Details</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>

@@ -6,6 +6,8 @@ import {ErrorComponent} from './error/error.component';
 import {LoginComponent} from './login/login.component';
 import {BusesComponent} from './buses/buses.component';
 import {BusDetailsComponent} from './bus-details/bus-details.component';
+import {PassesComponent} from './passes/passes.component';
+import {PassDetailsComponent} from './pass-details/pass-details.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,6 +16,8 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'buses', component: BusesComponent},
   {path: 'bus/:id', component: BusDetailsComponent},
+  {path: 'passes', component: PassesComponent},
+  {path: 'pass/:id', component: PassDetailsComponent},
   {path: '**', redirectTo: 'error'}
 ];
 

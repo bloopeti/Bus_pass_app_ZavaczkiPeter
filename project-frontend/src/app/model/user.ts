@@ -7,5 +7,5 @@ export class User {
   password: string;
   isAdmin: number;
   purchasedPasses: PurchasedPass[];
-  car: Cart;
+  cart: Cart;
 }

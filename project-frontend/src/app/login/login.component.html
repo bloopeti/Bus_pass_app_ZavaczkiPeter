@@ -16,6 +16,9 @@
     <p>You are already logged in!</p>
     <button (click)="logout()">Logout</button>
   </div>
+  <div *ngIf="!(message === '') && !(isUserLogged === 'true')">
+    <div class="alert alert-info" role="alert">{{message}}</div>
+  </div>
 </div>
 
 logged {{isUserLogged}}

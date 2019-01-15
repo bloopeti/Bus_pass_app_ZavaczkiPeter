@@ -1,0 +1,20 @@
+<div class="container">
+  <div>
+    <h2>Pass Details</h2>
+    <p>
+      <label>Type: </label>
+      <input #passType *ngIf="(isUserAdmin === 'true')" [(ngModel)]="pass.type" placeholder="pass line"/>
+      <span  #notAdmin *ngIf="!(isUserAdmin === 'true')">{{pass.type}}</span>
+    </p>
+    <p>
+      <label>Price: </label>
+      <input #passType *ngIf="(isUserAdmin === 'true')" [(ngModel)]="pass.price" placeholder="pass route"/>
+      <span  #notAdmin *ngIf="!(isUserAdmin === 'true')">{{pass.price}}</span>
+    </p>
+    <button *ngIf="(isUserAdmin === 'true')" (click)="add()">Add</button>
+    <button *ngIf="(isUserAdmin === 'true')" (click)="update()">Update</button>
+    <button *ngIf="(isUserAdmin === 'true')" (click)="delete()">Delete</button>
+    <br/>
+    <button *ngIf="(isUserLogged === 'true') && !(isUserAdmin === 'true')" (click)="addToCart()">Add to cart</button>
+  </div>
+</div>

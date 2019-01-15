@@ -4,28 +4,32 @@ import {MatIconModule, MatMenuModule, MatToolbarModule, MatButtonModule, MatTabl
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BusDetailsComponent} from './bus-details/bus-details.component';
 
 import {AppRoutingModule} from './app-routing.module';
 
 import {AppComponent} from './app.component';
+import {NavbarComponent} from './navbar/navbar.component';
 import {HomeComponent} from './home/home.component';
-import {BusesComponent} from './buses/buses.component';
-import {PassesComponent} from './passes/passes.component';
-import {LoginComponent} from './login/login.component';
 import {ErrorComponent} from './error/error.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import {LoginComponent} from './login/login.component';
+import {BusesComponent} from './buses/buses.component';
+import {BusDetailsComponent} from './bus-details/bus-details.component';
+import {PassesComponent} from './passes/passes.component';
+import {PassDetailsComponent} from './pass-details/pass-details.component';
+import { PersonalCartComponent } from './personal-cart/personal-cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     HomeComponent,
-    BusesComponent,
-    PassesComponent,
-    LoginComponent,
     ErrorComponent,
+    LoginComponent,
+    BusesComponent,
     BusDetailsComponent,
-    NavbarComponent
+    PassesComponent,
+    PassDetailsComponent,
+    PersonalCartComponent
   ],
   imports: [
     BrowserModule,
