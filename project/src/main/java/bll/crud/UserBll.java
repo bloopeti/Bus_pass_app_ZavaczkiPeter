@@ -7,6 +7,7 @@ import bll.dtos.PurchasedPassDTO;
 import bll.dtos.UserDTO;
 import bll.dtos.converters.UserConverter;
 import bll.mailing.Mailer;
+import bll.wrappers.IdWrapper;
 import dal.entities.User;
 import dal.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +76,16 @@ public class UserBll {
         return "USER DELETE FAILED: " + reason + " with this ID doesn't exist";
     }
 
-    public int login(UserDTO user) {
+    public UserDTO login(UserDTO user) {
         UserDTO dbUser = getUserByEmailAddress(user);
-        if (!(dbUser == null))
-            if (user.getPassword().equals(dbUser.getPassword()))
-                return dbUser.getIsAdmin();
-        return -10;
+        if (!(dbUser == null)) {
+            if (user.getPassword().equals(dbUser.getPassword())) {
+                return dbUser;
+            }
+        }
+        dbUser = new UserDTO();
+        dbUser.setIsAdmin(-10);
+        return dbUser;
     }
 
     public String register(UserDTO user) {

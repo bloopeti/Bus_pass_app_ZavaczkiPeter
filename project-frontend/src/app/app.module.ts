@@ -14,6 +14,7 @@ import {BusesComponent} from './buses/buses.component';
 import {PassesComponent} from './passes/passes.component';
 import {LoginComponent} from './login/login.component';
 import {ErrorComponent} from './error/error.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {ErrorComponent} from './error/error.component';
     PassesComponent,
     LoginComponent,
     ErrorComponent,
-    BusDetailsComponent
+    BusDetailsComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

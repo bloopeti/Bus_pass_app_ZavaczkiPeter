@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public int login(@RequestBody UserDTO user) {
+    public UserDTO login(@RequestBody UserDTO user) {
         return userBll.login(user);
     }
 

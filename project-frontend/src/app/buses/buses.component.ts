@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Bus} from '../model/bus';
 import {BusService} from '../services/bus.service';
 import {Router} from '@angular/router';
-import {environment} from '../environment';
 
 @Component({
   selector: 'app-buses',
@@ -13,13 +12,14 @@ export class BusesComponent implements OnInit {
 
   buses: Bus[] = [];
   displayedColumns: string[] = ['line', 'route', 'details'];
-  env = environment;
+  isUserAdmin: string;
 
   constructor(private router: Router, private busService: BusService) {
   }
 
   ngOnInit() {
-    if (this.env.isUserAdmin) {
+    this.isUserAdmin = localStorage.getItem('isUserAdmin');
+    if (this.isUserAdmin === 'true') {
       this.displayedColumns.reverse().push('id');
       this.displayedColumns.reverse();
     }

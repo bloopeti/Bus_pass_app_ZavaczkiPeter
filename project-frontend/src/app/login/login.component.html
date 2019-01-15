@@ -1,3 +1,25 @@
-<p>
-  login works!
-</p>
+<div style="text-align: center">
+  <div *ngIf="!(isUserLogged === 'true')">
+    <p>
+      <label>Email address</label>
+      <br/>
+      <input [(ngModel)]="userToLogin.emailAddress" type="text"/>
+    </p>
+    <p>
+      <label>Password</label>
+      <br/>
+      <input [(ngModel)]="userToLogin.password" type="password"/>
+    </p>
+    <button (click)="attemptLogin(); userToLogin.emailAddress=''; userToLogin.password=''">Login</button>
+  </div>
+  <div *ngIf="isUserLogged === 'true'">
+    <p>You are already logged in!</p>
+    <button (click)="logout()">Logout</button>
+  </div>
+</div>
+
+logged {{isUserLogged}}
+<br/>
+admin {{isUserAdmin}}
+<br/>
+returned {{returnedUser.isAdmin}}

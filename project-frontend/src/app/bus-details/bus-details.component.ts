@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Bus} from '../model/bus';
-import {environment} from '../environment';
 import {ActivatedRoute} from '@angular/router';
 import {BusService} from '../services/bus.service';
 import {IdWrapper} from '../model/idWrapper';
@@ -13,8 +12,8 @@ import {IdWrapper} from '../model/idWrapper';
 export class BusDetailsComponent implements OnInit {
 
   @Input() bus = new Bus();
-  env = environment;
   id: number;
+  isUserAdmin: string;
   private sub: any;
 
   constructor(private route: ActivatedRoute, private busService: BusService) {
@@ -28,6 +27,8 @@ export class BusDetailsComponent implements OnInit {
           this.bus = data;
         });
     });
+
+    this.isUserAdmin = localStorage.getItem('isUserAdmin');
   }
 
   add() {

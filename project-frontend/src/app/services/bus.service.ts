@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Bus} from '../model/bus';
 import {ErrorHandlerService} from './error-handler.service';
+import {Bus} from '../model/bus';
 import {IdWrapper} from '../model/idWrapper';
 
 const httpOptions = {
